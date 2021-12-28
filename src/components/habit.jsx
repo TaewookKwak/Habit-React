@@ -1,6 +1,14 @@
-import React, { Component } from 'react'
+import { attempt } from 'lodash'
+import React, { PureComponent } from 'react'
 
-export default class Habit extends Component {
+export default class Habit extends PureComponent {
+  componentDidMount() {
+    console.log(`habit : ${this.props.habit.name} mounted`)
+  }
+  componentWillUnmount() {
+    console.log(`habit : ${this.props.habit.name} unmounted`)
+  }
+
   handleIncreament = () => {
     this.props.onIncrement(this.props.habit)
   }
@@ -10,7 +18,7 @@ export default class Habit extends Component {
   }
 
   handleDelete = () => {
-    this.props.onDelete(this.props.habit)
+    if (window.confirm('지우겠습니까?')) this.props.onDelete(this.props.habit)
   }
 
   render() {

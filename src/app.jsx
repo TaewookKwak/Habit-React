@@ -8,24 +8,35 @@ import Reset from './components/reset'
 class App extends Component {
   state = {
     habits: [
-      { name: 'Reading', count: 0, key: 0 },
-      { name: 'Rynning', count: 0, key: 1 },
-      { name: 'Coding', count: 0, key: 2 },
+      { name: 'Reading', count: 0, id: 0 },
+      { name: 'Rynning', count: 0, id: 1 },
+      { name: 'Coding', count: 0, id: 2 },
     ],
   }
   handleIncreament = (habit) => {
-    //state 오브젝트 안에 있는 count 를 증가 한 뒤 state 업데이트
-    const habits = [...this.state.habits]
-    const index = habits.indexOf(habit)
-    habits[index].count++
+    // //state 오브젝트 안에 있는 count 를 증가 한 뒤 state 업데이트
+    // const habits = [...this.state.habits]
+    // const index = habits.indexOf(habit)
+    // habits[index].count++
+    const habits = this.state.habits.map((item) => {
+      if (item.id === habit.id) return { ...habit, count: habit.count + 1 }
+      return item
+    })
     this.setState({ habits: habits })
   }
 
   handleDecrement = (habit) => {
-    const habits = [...this.state.habits]
-    const index = habits.indexOf(habit)
-    const count = habits[index].count - 1
-    habits[index].count = count < 0 ? 0 : count
+    // const habits = [...this.state.habits]
+    // const index = habits.indexOf(habit)
+    // const count = habits[index].count - 1
+    // habits[index].count = count < 0 ? 0 : count
+    const habits = this.state.habits.map((item) => {
+      if (item.id === habit.id) {
+        const count = habit.count - 1
+        return { ...habit, count: habit.count > 0 ? count : 0 }
+      }
+      return item
+    })
     this.setState({ habits: habits })
   }
 
@@ -46,7 +57,9 @@ class App extends Component {
 
   handleReset = () => {
     const habits = this.state.habits.map((habit) => {
-      habit.count = 0
+      if (habit.count !== 0) {
+        return { ...habit, count: 0 }
+      }
       return habit
     })
     this.setState({ habits: habits })

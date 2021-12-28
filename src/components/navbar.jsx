@@ -1,11 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class Navbar extends Component {
-  state = {
-    counter: 0,
-  }
-
+class Navbar extends PureComponent {
   render() {
+    console.log('nav')
     return (
       <nav className="navbar">
         <span className="navbar-title">Habit Tracker</span>
